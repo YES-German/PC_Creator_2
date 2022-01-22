@@ -11,27 +11,7 @@ class levelroles(commands.Cog):
     
     def __init__(self, client):
         self.client = client
-
-    @commands.Cog.listener()
-    async def on_message(self, message):
-
-
-        if not message.content.startswith(","):    
-            await self.new_member(message.author)
-
-            user = message.author
-
-            users = await self.get_messages()  
-
-            messag_e = int(1)
-
-            users[str(user.id)]["messages"] += messag_e
-
-            with open("levelroles.json", "w") as f:
-                json.dump(users,f)        
-
-
-        await self.client.process_commands(message)      
+             
 
     @commands.command(aliases=["levelroles"])        
     async def lrs(self,ctx, member:discord.Member = None):
