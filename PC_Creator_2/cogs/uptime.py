@@ -16,7 +16,7 @@ class uptime(commands.Cog):
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
-        await ctx.send(f"Der Bot ist seid **{days} Tagen**, **{hours} Stunden** und **{minutes} Minuten** online")
+        await ctx.send(f"Der Bot ist seid **{days} days**, **{hours} hours** und **{minutes} minutes** online")
 
 
 def setup(client):

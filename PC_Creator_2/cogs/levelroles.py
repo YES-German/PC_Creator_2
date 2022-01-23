@@ -23,12 +23,14 @@ class levelroles(commands.Cog):
             your = "Your"
             your2 = "your"
             have = "have"
+            dont = "don't"
 
         else:
             you = "He/She"   
             your = "His/Her"
             your2 = "his/her"
             have = "has"
+            dont = "doesn't"
 
         user = member
 
@@ -49,7 +51,7 @@ class levelroles(commands.Cog):
             reached_level_5 = False
             member = ctx.guild.get_member(member.id) # Get the member object of the user
             if get(member.roles, id=934114613639938168): # Check if this role is in the member's roles
-                level = discord.Embed(title=f"{member.name}'s Level", description=f"{you} already {have} the **Level 1** role \n{your} next level role is **Level 2** and here's {your2} progress:", colour=13565696)
+                level = discord.Embed(title=f"{member.display_name}'s Level", description=f"{you} already {have} the **Level 1** role \n{your} next level role is **Level 2** and here's {your2} progress:", colour=13565696)
                 message_field = int(2000)
                 date_field = int(90)
                 if messages_amt >= message_field and not get(member.roles, id=934116232628674562):
@@ -63,7 +65,7 @@ class levelroles(commands.Cog):
                 if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934116232628674562):
                     reached_level_2 = True    
                 if get(member.roles, id=934116232628674562):
-                    level = discord.Embed(title=f"{member.name}'s Levels", description=f"{you} already {have} the **Level 1** and **Level 2** roles \n{your} next level role is **Level 3** and here's {your2} progress:", colour=13565696)
+                    level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} already {have} the **Level 1** and **Level 2** roles \n{your} next level role is **Level 3** and here's {your2} progress:", colour=13565696)
                     message_field = int(4000)
                     date_field = int(120)
                     if messages_amt >= message_field and not get(member.roles, id=934116557951475783):
@@ -77,7 +79,7 @@ class levelroles(commands.Cog):
                     if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934116557951475783):
                         reached_level_3 = True
                     if get(member.roles, id=934116557951475783):
-                        level = discord.Embed(title=f"{member.name}'s Levels", description=f"{you} already {have} the **Level 1**, **Level 2** and **Level 3** roles \n{your} next level role is **Level 4** and here's {your2} progress:", colour=13565696)
+                        level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} already {have} the **Level 1**, **Level 2** and **Level 3** roles \n{your} next level role is **Level 4** and here's {your2} progress:", colour=13565696)
                         message_field = int(8000)
                         date_field = int(150)
                         if messages_amt >= message_field and not get(member.roles, id=934116875091189780):
@@ -91,7 +93,7 @@ class levelroles(commands.Cog):
                         if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934116875091189780):
                             reached_level_4 = True
                         if get(member.roles, id=934116875091189780):
-                            level = discord.Embed(title=f"{member.name}'s Levels", description=f"{you} already {have} the **Level 1**, **Level 2**, **Level 3** and **Level 4** roles \n{your} next level role is **Level 5** and here's {your2} progress:", colour=13565696)    
+                            level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} already {have} the **Level 1**, **Level 2**, **Level 3** and **Level 4** roles \n{your} next level role is **Level 5** and here's {your2} progress:", colour=13565696)    
                             message_field = int(16000)
                             date_field = int(180)
                             if messages_amt >= message_field and not get(member.roles, id=934117031668744193):
@@ -105,11 +107,11 @@ class levelroles(commands.Cog):
                             if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934117031668744193):
                                 reached_level_5 = True    
                             if get(member.roles, id=934117031668744193):
-                                level = discord.Embed(title=f"{member.name}'s Levels", description=f"{you} already {have} **all** of the level **roles**. Here's {your2} progress:", colour=13565696)  
+                                level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} already {have} **all** of the level **roles**. Here's {your2} progress:", colour=13565696)  
                                 emoji = ":gem:"
                                 date_emoji = ":gem:"
             else:
-                level = discord.Embed(title=f"{member.name}'s Levels", description=f"{you} don't {have} any level roles yet \n{your} next level role is **Level 1** and here's {your2} progress:", color=13565696)
+                level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} {dont} {have} any level roles yet \n{your} next level role is **Level 1** and here's {your2} progress:", color=13565696)
                 message_field = int(1000)
                 date_field = int(60)
                 if messages_amt >= message_field and not get(member.roles, id=934114613639938168):

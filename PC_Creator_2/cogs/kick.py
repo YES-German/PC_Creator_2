@@ -7,10 +7,10 @@ class kick(commands.Cog):
         self.client = client
 
 
-    @commands.slash_command(name="kick")
+    @commands.slash_command(name="kick", description="For moderation")
     @commands.has_permissions(kick_members = True)
     async def kick(self, ctx, member : discord.Member, *, reason= "No reason ..."):
-        channel = self.client.get_channel(850085134622261308)
+        channel = self.client.get_channel(933768368970932254)
         try:
             await member.send(f"You were kicked on the PC Creater server")
             await member.send(f"reason: {reason}")

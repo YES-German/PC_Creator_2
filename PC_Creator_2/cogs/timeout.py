@@ -15,6 +15,7 @@ class timeout(commands.Cog):
     @commands.slash_command(name = 'timeout', description = "mutes/timeouts a member")
     @commands.has_permissions(moderate_members = True)
     async def timeout(self, ctx, member: Option(discord.Member, required = True), reason: Option(str, required = False), days: Option(int, max_value = 27, required = False), hours: Option(int, required = False), minutes: Option(int, required = False), seconds: Option(int, required = False)):
+        channel = self.client.get_channel(933768368970932254)
         if member.id == ctx.author.id:
             await ctx.respond("You can't timeout yourself!")
             return
@@ -35,10 +36,22 @@ class timeout(commands.Cog):
             return
         if reason == None:
             await member.timeout_for(duration)
-            await ctx.respond(f"<@{member.id}> has been timed out for {days} days, {hours} hours, {minutes} minutes, and {seconds} seconds by <@{ctx.author.id}>.")
+            embed = discord.Embed(title="Timeout", color=13565696)
+            embed.add_field(name="Muted", value=f"{member.mention}")
+            embed.add_field(name="Moderator", value=f"{ctx.author.mention}")
+            embed.add_field(name="Duration", value=f"**{days}** days, **{hours}** hours,\n**{minutes}** minutes, and **{seconds}** second",inline=False)
+            embed.add_field(name="Reason:", value="No reason ...")
+            await ctx.respond(f"Muted <@{member.id}> for {days} days, {hours} hours, {minutes} minutes, and {seconds} seconds by <@{ctx.author.id}>.")
+            await channel.send(embed=embed)
         else:
             await member.timeout_for(duration, reason = reason)
-            await ctx.respond(f"<@{member.id}> has been timed out for {days} days, {hours} hours, {minutes} minutes, and {seconds} seconds by <@{ctx.author.id}> for '{reason}'.")
+            embed = discord.Embed(title="Timeout", color=13565696)
+            embed.add_field(name="Muted", value=f"{member.mention}")
+            embed.add_field(name="Moderator", value=f"{ctx.author.mention}")
+            embed.add_field(name="Duration", value=f"**{days}** days, **{hours}** hours,\n**{minutes}** minutes, and **{seconds}** second",inline=False)
+            embed.add_field(name="Reason:", value=reason)
+            await channel.send(embed=embed)
+            await ctx.respond(f"Muted <@{member.id}> for {days} days, {hours} hours, {minutes} minutes, and {seconds} seconds by <@{ctx.author.id}> for '{reason}'.")
 
     @timeout.error
     async def timeouterror(ctx, error):
