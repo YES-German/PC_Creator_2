@@ -56,7 +56,7 @@ async def on_message(message):
     filtered_words = ["fuck", "idiot", "shit"] 
     everyone_mention = "<@571031703661969430>" 
     everyone2_mention = "<@708218806928932896>"
-    topleveldomain = ["com", "ru", "org", "net"]
+    topleveldomain = ["https://", "http://", "com", "ru", "org", "net"]
 
     for word in topleveldomain:
         if (word in message.content and ("@everyone" in message.content or "@here" in message.content)) and len(message.content) > 32:
@@ -153,4 +153,4 @@ if __name__ == '__main__':
     for extension in initial_extensions:
         client.load_extension(extension)    
 
-client.run("TOKEN")    
+client.run("ODg0NDAyMzgzOTIzMzM5Mjk1.YTX95w.aoNGBm6y5KopkwMN7ewYnZstJ_A")    

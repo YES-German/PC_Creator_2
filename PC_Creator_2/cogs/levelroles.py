@@ -36,8 +36,10 @@ class levelroles(commands.Cog):
 
         users = await self.get_messages()
 
+
         messages_amt_str = users[str(user.id)]["messages"]
         messages_amt = int(messages_amt_str)
+
 
         if member in ctx.guild.members: # checks if the provided member is in the current server
             date_now = date.today()
@@ -137,31 +139,29 @@ class levelroles(commands.Cog):
 
         if reached_level_2 == True:
             role = ctx.guild.get_role(934116232628674562)
-            await ctx.send("You've received the **Level 2** role")
+            await ctx.send(f"{you} received the **Level 2** role")
             await member.add_roles(role)
 
         if reached_level_3 == True:
             role = ctx.guild.get_role(934116557951475783)
-            await ctx.send("You've received the **Level 3** role")
+            await ctx.send(f"{you} received the **Level 3** role")
             await member.add_roles(role)  
 
         if reached_level_4 == True:
             role = ctx.guild.get_role(934116875091189780)  
-            await ctx.send("You've received the **Level 4** role")
+            await ctx.send(f"{you} received the **Level 4** role")
             await member.add_roles(role)   
 
         if reached_level_5 == True:
             role = ctx.guild.get_role(934117031668744193)  
-            await ctx.send("You've received the **Level 5** role")
+            await ctx.send(f"{you} received the **Level 5** role")
             await member.add_roles(role) 
 
         if reached_level_1 == True:
             role = ctx.guild.get_role(934114613639938168)  
-            await ctx.send("You've received the **Level 1** role")
+            await ctx.send(f"{you} received the **Level 1** role")
             await member.add_roles(role)          
 
-
-        
 
     async def get_messages(self):
         with open("levelroles.json", "r") as f:
@@ -193,7 +193,7 @@ class levelroles(commands.Cog):
     async def givelevels(self, ctx, member:discord.Member,*, amount):
         if ctx.author.id == 695229647021015040:
 
-            await self.new_member(ctx.author)
+            await self.new_member(member)
 
             user = member
             users = await self.get_messages()  
@@ -212,7 +212,7 @@ class levelroles(commands.Cog):
     async def setzero(self, ctx, member:discord.Member):
         if ctx.author.id == 695229647021015040:
 
-            await self.new_member(ctx.author)
+            await self.new_member(member)
 
             user = member
             users = await self.get_messages()  

@@ -10,15 +10,15 @@ class suggestions(commands.Cog):
 
     @commands.command()
     async def suggest(self, ctx, reason=None): 
+        count_yes = int(1)
+        count_no= int(1)
         if not ctx.channel.id == 933813622952562718:
             await ctx.send("This command only works in #suggestions")
         else:
             if reason == None:
                 await ctx.send("You have to use ,suggest and then type your suggestion after ,suggest")
             else:
-                count_yes = int(1)
-                count_no= int(1)
-                button_yes = Button(label=f"{count_yes}", style=discord.ButtonStyle.success, emoji="✅")
+                button_yes = Button(label=count_yes, style=discord.ButtonStyle.success, emoji="✅")
                 button_no = Button(label=f"{count_no}", style=discord.ButtonStyle.danger, emoji="❌")
 
                 view = View()
@@ -31,7 +31,8 @@ class suggestions(commands.Cog):
 
 
                 async def button_yes_callback(interaction):
-                    count_yes =+ int(1)
+                    count_yes =  + 1 
+                    button_yes.label = count_yes + 1
                     await message.edit(view=view)
 
                 async def button_no_callback(interaction):

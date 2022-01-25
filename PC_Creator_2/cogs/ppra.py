@@ -8,6 +8,7 @@ class ppra(commands.Cog):
 
  
     @commands.command(aliases=["proplayeraddrole"])
+    @commands.has_permissions(moderate_members = True)
     async def ppra(self, ctx, member:discord.Member):
         role = ctx.guild.get_role(775736993018806322)
         await ctx.send(f"Added role **PRO PLAYER** to **{member}**")
