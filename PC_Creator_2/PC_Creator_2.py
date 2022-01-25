@@ -153,4 +153,4 @@ if __name__ == '__main__':
     for extension in initial_extensions:
         client.load_extension(extension)    
 
-client.run("ODg0NDAyMzgzOTIzMzM5Mjk1.YTX95w.aoNGBm6y5KopkwMN7ewYnZstJ_A")    
+client.run("TOKEN")    
