@@ -37,9 +37,22 @@ class levelroles(commands.Cog):
         users = await self.get_messages()
 
 
-        messages_amt_str = users[str(user.id)]["messages"]
-        messages_amt = int(messages_amt_str)
 
+        messages_amt_str = users[str(user.id)]
+        messages_amt = int(messages_amt_str)
+            
+
+            
+            
+        #     leaderboard.append(f"{key} {value['messages']}")
+            
+        # print(leaderboard)    
+        
+        # print(leaderboard[0])  
+        # print(leaderboard[1]) 
+        # print(leaderboard[2])
+        # print(leaderboard[3])
+        # print(leaderboard[4])
 
         if member in ctx.guild.members: # checks if the provided member is in the current server
             date_now = date.today()
@@ -164,7 +177,7 @@ class levelroles(commands.Cog):
 
 
     async def get_messages(self):
-        with open("levelroles.json", "r") as f:
+        with open("userLevels.json", "r") as f:
             users = json.load(f)
         return users   
 
@@ -176,9 +189,9 @@ class levelroles(commands.Cog):
             return False
         else:
             users[str(user.id)] = {}
-            users[str(user.id)]["messages"] = 0        
+            users[str(user.id)] = 0        
 
-        with open("levelroles.json", "w") as f:
+        with open("userLevels.json", "w") as f:
             json.dump(users,f)
         return True     
 
@@ -198,9 +211,9 @@ class levelroles(commands.Cog):
             user = member
             users = await self.get_messages()  
             messag_e = int(amount)
-            users[str(user.id)]["messages"] += messag_e
+            users[str(user.id)] += messag_e
 
-            with open("levelroles.json", "w") as f:
+            with open("userLevels.json", "w") as f:
                 json.dump(users,f)
 
             await ctx.send(f"Added {amount} messages to {member}")    
@@ -216,14 +229,29 @@ class levelroles(commands.Cog):
 
             user = member
             users = await self.get_messages()  
-            messages_amt_str = users[str(user.id)]["messages"]
+            messages_amt_str = users[str(user.id)]
             messages_amt = int(messages_amt_str) 
-            users[str(user.id)]["messages"] += -1*messages_amt     
+            users[str(user.id)] += -1*messages_amt     
 
-            with open("levelroles.json", "w") as f:
+            with open("userLevels.json", "w") as f:
                 json.dump(users,f)
 
-            await ctx.send(f"Set {member} messages to 0")     
+            await ctx.send(f"Set {member} messages to 0")   
+
+    @commands.command()
+    async def led(self, ctx):
+        with open("userLevels.json", "r") as f:
+            data = json.load(f)
+
+            leaderboard = sorted(data.items(), key= lambda x: x[1], reverse=True)[:5]
+            user_id_1st, msg_count_1st = leaderboard[0]
+            user_id_2nd, msg_count_2nd = leaderboard[1]
+            user_id_3rd, msg_count_3rd = leaderboard[2]
+            user_id_4th, msg_count_4th = leaderboard[3]
+            user_id_5th, msg_count_5th = leaderboard[4]
+            embed= discord.Embed(title="Leaderboard", color=13565696)
+            embed.add_field(name="Top users by messages sent", value=f"`1.` <@{user_id_1st}>: {msg_count_1st} \n`2.` <@{user_id_2nd}>: {msg_count_2nd} \n`3.` <@{user_id_3rd}>: {msg_count_3rd} \n`4.` <@{user_id_4th}>: {msg_count_4th} \n`5.` <@{user_id_5th}>: {msg_count_5th}")
+            await ctx.send(embed=embed)          
 
 def setup(client):
     client.add_cog(levelroles(client))            

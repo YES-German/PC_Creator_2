@@ -14,7 +14,7 @@ from discord import Option
 from discord.ext.commands import MissingPermissions
 import os
 from discord.utils import get
-from antispam import AntiSpamHandler, Options
+#from antispam import AntiSpamHandler, Options
 from collections import Counter
 import collections
 # from AntiSpamTrackerSubclass import MyCustomTracker
@@ -45,6 +45,7 @@ async def on_command_error(ctx, error):
 spammers = []
 
 
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -54,13 +55,10 @@ async def on_message(message):
     # await client.process_commands(message)
 
     filtered_words = ["fuck", "idiot", "shit"] 
-    everyone_mention = "<@571031703661969430>" 
-    everyone2_mention = "<@708218806928932896>"
     topleveldomain = ["https://", "http://", "com", "ru", "org", "net"]
 
     for word in topleveldomain:
         if (word in message.content and ("@everyone" in message.content or "@here" in message.content)) and len(message.content) > 32:
-            print("OKKKK")
             spammers.append(message.author.id)   
 
     if Counter(spammers)[message.author.id] > 4:
@@ -102,9 +100,9 @@ async def on_message(message):
 
             messag_e = int(1)
 
-            users[str(user.id)]["messages"] += messag_e
+            users[str(user.id)] += messag_e
 
-            with open("levelroles.json", "w") as f:
+            with open("userLevels.json", "w") as f:
                 json.dump(users,f)           
 
     await client.process_commands(message)  
@@ -117,7 +115,7 @@ async def testo(ctx):
     
 
 async def get_messages():
-    with open("levelroles.json", "r") as f:
+    with open("userLevels.json", "r") as f:
         users = json.load(f)
     return users   
 
@@ -129,9 +127,9 @@ async def new_member(user):
         return False
     else:
         users[str(user.id)] = {}
-        users[str(user.id)]["messages"] = 0        
+        users[str(user.id)] = 0        
 
-    with open("levelroles.json", "w") as f:
+    with open("userLevels.json", "w") as f:
         json.dump(users,f)
     return True     
 
