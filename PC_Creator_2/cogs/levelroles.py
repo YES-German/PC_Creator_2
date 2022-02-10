@@ -5,14 +5,21 @@ import json
 from datetime import timedelta
 from datetime import date
 from discord.utils import get
+import schedule
+import time
+from PIL import Image, ImageDraw, ImageFont
+import asyncio
+from discord.ext import tasks
 
 
 class levelroles(commands.Cog):
     
     def __init__(self, client):
         self.client = client
-             
-
+        schedule.every().day.at("00:00").do(self.lrs_stats) 
+              
+     
+    
     @commands.command(aliases=["levelroles"])        
     async def lrs(self,ctx, member:discord.Member = None):
         await self.new_member(ctx.author)
@@ -40,19 +47,7 @@ class levelroles(commands.Cog):
 
         messages_amt_str = users[str(user.id)]
         messages_amt = int(messages_amt_str)
-            
-
-            
-            
-        #     leaderboard.append(f"{key} {value['messages']}")
-            
-        # print(leaderboard)    
-        
-        # print(leaderboard[0])  
-        # print(leaderboard[1]) 
-        # print(leaderboard[2])
-        # print(leaderboard[3])
-        # print(leaderboard[4])
+    
 
         if member in ctx.guild.members: # checks if the provided member is in the current server
             date_now = date.today()
@@ -238,10 +233,12 @@ class levelroles(commands.Cog):
 
             await ctx.send(f"Set {member} messages to 0")   
 
-    @commands.command()
-    async def led(self, ctx):
+    @commands.command(aliases=["leaderboard"])
+    async def lead(self, ctx):
+        #self.lrs_stats()
         with open("userLevels.json", "r") as f:
             data = json.load(f)
+            f = discord.File("/home/pi/Desktop/PC_Creator_2/dailymsgs.png")
 
             leaderboard = sorted(data.items(), key= lambda x: x[1], reverse=True)[:5]
             user_id_1st, msg_count_1st = leaderboard[0]
@@ -251,7 +248,81 @@ class levelroles(commands.Cog):
             user_id_5th, msg_count_5th = leaderboard[4]
             embed= discord.Embed(title="Leaderboard", color=13565696)
             embed.add_field(name="Top users by messages sent", value=f"`1.` <@{user_id_1st}>: {msg_count_1st} \n`2.` <@{user_id_2nd}>: {msg_count_2nd} \n`3.` <@{user_id_3rd}>: {msg_count_3rd} \n`4.` <@{user_id_4th}>: {msg_count_4th} \n`5.` <@{user_id_5th}>: {msg_count_5th}")
-            await ctx.send(embed=embed)          
+            embed.set_image(url="attachment://dailymsgs.png")
+            await ctx.send(file=f,embed=embed)   
+
+
+    def lrs_stats(self):
+        with open ("counter-file.txt", "r") as d_m:
+            data = d_m.readlines()
+            d_m.close
+        new_amt = data[64]
+        data[0] = f"{new_amt}\n{data[0]}"
+        data[59] = ""
+        data[64] = "0"
+        with open ("counter-file.txt", "w") as cf:
+            cf.writelines(data)
+            cf.close
+        with open ("counter-file.txt", "r") as d_m:
+            data = d_m.read().splitlines()
+            d_m.close
+        data = [string for string in data if string != ""]
+
+        data_2 = list(int(x) for x in data)
+        hunderter = round(max(data_2)/100 + .5)
+        if hunderter == 0:
+            hunderter = 1
+        x = 1
+        y = 500/hunderter
+        line = Image.open("lrs_stats_tabelle.png")
+        draw = ImageDraw.Draw(line)
+        for i in range(hunderter):
+            y_1 = 500-y*x+2
+            draw.line((4, y_1, 724, y_1), fill=(45, 48, 52), width=2)
+            x += 1
+        draw.line((4, 502, 724, 502), fill=(45, 48, 52), width=2)
+        x_punkte = 0
+        punktn = int(0)
+        #print(data)
+        #print(data[punktn])
+        for i in range(60):
+            y_multi = data[punktn]
+            y_punkte = int(500/hunderter/100*int(y_multi))
+            y_punkte = 500-y_punkte
+            xy = [(716-x_punkte, y_punkte-1),(724-x_punkte, y_punkte+7)]
+            draw.ellipse(tuple(xy),fill=(88, 101, 242), outline=(88, 101, 242))
+            x_punkte += 12
+            punktn += 1
+        punktn = int(0)
+        x_punkte = 5
+        punktn = int(0)
+        for i in range(59):
+            y_multi = data[punktn]
+            y_punkte_1 = int(500-(500/hunderter/100*int(y_multi)))
+            punktn += 1
+            y_multi = data[punktn]
+            y_punkte_2 = int(500-(500/hunderter/100*int(y_multi)))
+            xy = [(714-x_punkte, y_punkte_2+3),(724-x_punkte, y_punkte_1+3)]
+            draw.line(xy, fill=(88, 101, 242), width=3)
+            x_punkte += 12
+        lrs_picture = Image.open("lrs_stats_fertig.png")
+        lrs_picture.paste(line, (5, 46))
+        lrs_picture_text = ImageDraw.Draw(lrs_picture)
+        lrs_picture_text.fontmode = "1"
+        myFont = ImageFont.truetype('/home/pi/Desktop/PC_Creator_2/calibri.ttf', 20)
+        x = 0
+        y = 500/hunderter
+        for i in range(hunderter):
+            y_1 = y*x+40
+            lrs_picture_text.text((731, y_1), f"{(hunderter-x)*100} msgs/day",font=myFont, fill=(255, 255, 255))
+            x += 1
+        lrs_picture_text.text((731, 540), "0 msgs/day",font=myFont, fill=(255, 255, 255))
+        lrs_picture.save("dailymsgs.png")  
+
+  
+    
+
+        
 
 def setup(client):
     client.add_cog(levelroles(client))            

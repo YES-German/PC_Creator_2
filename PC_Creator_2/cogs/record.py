@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import json
 
 class record(commands.Cog):
 
@@ -15,7 +16,6 @@ class record(commands.Cog):
         embed.set_image(url="https://cdn.discordapp.com/attachments/838857610358292532/905766073557729290/record.jpg")
 
         await ctx.send(embed=embed)   
-
 
 def setup(client):
     client.add_cog(record(client))
