@@ -166,17 +166,20 @@ class levelroles(commands.Cog):
         embed = level
         embed.add_field(name="Messages", value=f"{emoji} {messages_amt}/{message_field}")
         embed.add_field(name="Days", value=f"{date_emoji} {delta_int}/{date_field}")
-        embed.set_thumbnail(url=member.avatar.url)
+        try:    
+            embed.set_thumbnail(url=member.avatar.url)
+        except:
+            pass    
         await send(embed=embed)
 
         if reached_level_2 == True:
             role = ctx.guild.get_role(934116232628674562)
-            await send(f"{you} received the **Level 2** role")
+            await ctx.send(f"{you} received the **Level 2** role")
             await member.add_roles(role)
 
         if reached_level_3 == True:
             role = ctx.guild.get_role(934116557951475783)
-            await send(f"{you} received the **Level 3** role")
+            await ctx.send(f"{you} received the **Level 3** role")
             await member.add_roles(role)  
 
         if reached_level_4 == True:
@@ -186,12 +189,12 @@ class levelroles(commands.Cog):
 
         if reached_level_5 == True:
             role = ctx.guild.get_role(934117031668744193)  
-            await send(f"{you} received the **Level 5** role")
+            await ctx.send(f"{you} received the **Level 5** role")
             await member.add_roles(role) 
 
         if reached_level_1 == True:
             role = ctx.guild.get_role(934114613639938168)  
-            await send(f"{you} received the **Level 1** role")
+            await ctx.send(f"{you} received the **Level 1** role")
             await member.add_roles(role)          
 
 
@@ -257,8 +260,44 @@ class levelroles(commands.Cog):
 
             await ctx.send(f"Set {member} messages to 0")   
 
-    @commands.command(aliases=["leaderboard"])
-    async def lead(self, ctx):
+        else:
+            await ctx.send("Fuck yourself")  
+
+
+    @commands.command()
+    async def setlevels(self, ctx, member:discord.Member, amount):
+        if ctx.author.id == 695229647021015040:
+
+            await self.new_member(member)
+
+            user = member
+            users = await self.get_messages()  
+            messages_amt_str = users[str(user.id)]
+            messages_amt = int(messages_amt_str) 
+            users[str(user.id)] += -1*messages_amt 
+            messag_e = int(amount)
+            users[str(user.id)] += messag_e    
+
+            with open("userLevels.json", "w") as f:
+                json.dump(users,f)
+
+            await ctx.send(f"Set {member} messages to {amount}")   
+
+        else:
+            await ctx.send("You don't have the permissions to use this command")  
+
+
+    @commands.command(aliases=["leaderboard", "lead"])
+    async def lead_command(self, ctx):
+        send = ctx.send
+        await self.lead(ctx, send)
+
+    @commands.slash_command(name="leaderboard", description="Shows the ,lrs leaderboard")
+    async def lead_slash(self, ctx):
+        send = ctx.respond
+        await self.lead(ctx, send)
+
+    async def lead(self, ctx, send):
         #self.lrs_stats()
         with open("userLevels.json", "r") as f:
             data = json.load(f)
@@ -273,7 +312,7 @@ class levelroles(commands.Cog):
             embed= discord.Embed(title="Leaderboard", color=13565696)
             embed.add_field(name="Top users by messages sent", value=f"`1.` <@{user_id_1st}>: {msg_count_1st} \n`2.` <@{user_id_2nd}>: {msg_count_2nd} \n`3.` <@{user_id_3rd}>: {msg_count_3rd} \n`4.` <@{user_id_4th}>: {msg_count_4th} \n`5.` <@{user_id_5th}>: {msg_count_5th}")
             embed.set_image(url="attachment://dailymsgs.png")
-            await ctx.send(file=f,embed=embed)   
+            await send(file=f,embed=embed)   
 
 
     def lrs_stats(self):
@@ -296,8 +335,18 @@ class levelroles(commands.Cog):
         hunderter = round(max(data_2)/100 + .5)
         if hunderter == 0:
             hunderter = 1
+
+        divier_5 = False
+        if hunderter >= 10:
+            while divier_5 == False:
+                if hunderter % 5 == 0:
+                    divier_5 = True
+                    hunderter_1 = int(hunderter / 5)
+                else:
+                    hunderter += 1
+        
         x = 1
-        y = 500/hunderter
+        y = 500/hunderter_1
         line = Image.open("lrs_stats_tabelle.png")
         draw = ImageDraw.Draw(line)
         for i in range(hunderter):
@@ -307,8 +356,6 @@ class levelroles(commands.Cog):
         draw.line((4, 502, 724, 502), fill=(45, 48, 52), width=2)
         x_punkte = 0
         punktn = int(0)
-        #print(data)
-        #print(data[punktn])
         for i in range(60):
             y_multi = data[punktn]
             y_punkte = int(500/hunderter/100*int(y_multi))
@@ -336,12 +383,19 @@ class levelroles(commands.Cog):
         myFont = ImageFont.truetype('/home/pi/Desktop/PC_Creator_2/calibri.ttf', 20)
         x = 0
         y = 500/hunderter
-        for i in range(hunderter):
+        text = hunderter_1
+        for i in range(text):
             y_1 = y*x+40
-            lrs_picture_text.text((731, y_1), f"{(hunderter-x)*100} msgs/day",font=myFont, fill=(255, 255, 255))
-            x += 1
+            if divier_5 == False:
+                lrs_picture_text.text((731, y_1), f"{(hunderter-x)*100} msgs/day",font=myFont, fill=(255, 255, 255))
+                x += 1
+            elif divier_5 == True:
+                hunderter_2 = hunderter
+                if (hunderter_2-x)*100 % 1000 == 0:
+                    lrs_picture_text.text((731, y_1), f"{(hunderter_2-x)*100} msgs/day",font=myFont, fill=(255, 255, 255))
+                x += 5
         lrs_picture_text.text((731, 540), "0 msgs/day",font=myFont, fill=(255, 255, 255))
-        lrs_picture.save("dailymsgs.png")  
+        lrs_picture.save("dailymsgs.png")   
 
   
     

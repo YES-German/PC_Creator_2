@@ -15,7 +15,7 @@ class suggestions_pcc1(commands.Cog):
         #count_yes = 0
         #count_no= int(1)
         #count_yes_1 = count_yes + int(1)
-        if ctx.channel.id == 572541644755435520 or ctx.channel.id == 933813622952562718:
+        if ctx.channel.id == 572541644755435520 or ctx.channel.id == 933813622952562718 or ctx.channel.id == 940691696918880326:
         
             if reason == None:
                 await ctx.send("You have to use ,suggest and then type your suggestion after ,suggest", delete_after=10)

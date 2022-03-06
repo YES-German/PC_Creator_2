@@ -14,7 +14,7 @@ class staff(commands.Cog):
         embed.add_field(name="Administrator", value="<@387088097374109698>, \n<@695229647021015040>", inline=False)
         embed.add_field(name="Moderator", value="<@491620401810767881>, \n<@713696771188195368>", inline=False)
         embed.add_field(name="Trial-Mod", value="None", inline=False)
-        embed.add_field(name="Helper", value=f"<@695229647021015040>, \n<@402885493320318977>, \n<@713696771188195368>, \n<@220072736725270528> \n\nIf you have a question with the game, you are open to ping or message a {helper_role.mention} to receive help.")
+        embed.add_field(name="Helper", value=f"<@695229647021015040>, \n<@402885493320318977>, \n<@713696771188195368>, \n<@220072736725270528>, \n<@761937966867152929> \n\nIf you have a question with the game, you are open to ping or message a {helper_role.mention} to receive help.")
         embed.set_footer(text="Some users are not displayed here because their activity on Discord is not moderation-oriented.")
 
         await ctx.send(embed=embed)
@@ -27,7 +27,7 @@ class staff(commands.Cog):
         embed.add_field(name="Administrator", value="<@387088097374109698>, \n<@695229647021015040>", inline=False)
         embed.add_field(name="Moderator", value="<@491620401810767881>, \n<@713696771188195368>", inline=False)
         embed.add_field(name="Trial-Mod", value="None", inline=False)
-        embed.add_field(name="Helper", value=f"<@695229647021015040>, \n<@402885493320318977>, \n<@713696771188195368>, \n<@220072736725270528> \n\nIf you have a question with the game, you are open to ping or message a {helper_role.mention} to receive help.")
+        embed.add_field(name="Helper", value=f"<@695229647021015040>, \n<@402885493320318977>, \n<@713696771188195368>, \n<@220072736725270528>, \n<@761937966867152929> \n\nIf you have a question with the game, you are open to ping or message a {helper_role.mention} to receive help.")
         embed.set_footer(text="Some users are not displayed here because their activity on Discord is not moderation-oriented.")
 
         await ctx.respond(embed=embed)    

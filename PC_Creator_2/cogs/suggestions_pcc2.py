@@ -55,8 +55,11 @@ class suggestions_pcc2(commands.Cog):
         if ctx.channel.id == 940691696918880326 or ctx.channel.id == 933813622952562718:
 
             await ctx.respond("Added your suggestion✅", ephemeral=True)
-            embed=discord.Embed(title="Suggestion:", description=suggestion, color=13565696, timestamp=datetime.utcnow())   
-            embed.set_author(name=f"{ctx.author.display_name} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+            embed=discord.Embed(title="Suggestion:", description=suggestion, color=13565696, timestamp=datetime.utcnow())  
+            try: 
+                embed.set_author(name=f"{ctx.author.display_name} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+            except:
+                pass    
             message = await ctx.send(embed=embed)
             await message.add_reaction("✅")
             await message.add_reaction("❌")

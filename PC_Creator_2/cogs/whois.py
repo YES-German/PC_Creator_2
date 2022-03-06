@@ -30,9 +30,9 @@ class whois(commands.Cog):
         await new_restriction(ctx)
         #await check_server_restriction(ctx)
         
-        if await check_server_restriction(ctx):  # the == True can be omitted
+        #if await check_server_restriction(ctx):  # the == True can be omitted
         #    print("Nicht perint")
-            return
+        #    return
 
         if member == None:
             member = ctx.author
@@ -92,7 +92,10 @@ class whois(commands.Cog):
         embed.add_field(name=":small_blue_diamond: Join date", value=f"{member_joined} (MM-DD-YYY), {delta_join_int} {joined_delta_shown} ago", inline=False)
         embed.add_field(name=":small_blue_diamond: ID, Nickname, and Mention", value=f"ID: {member.id} \nNickname: {member.display_name} \nMention: {member.mention}", inline = False)
         embed.add_field(name=":small_blue_diamond: Roles", value=f"{rr2}", inline=False)
-        embed.set_image(url=member.avatar.url)
+        try:
+            embed.set_image(url=member.avatar.url)
+        except:
+            pass    
         await send(embed=embed)
 
         

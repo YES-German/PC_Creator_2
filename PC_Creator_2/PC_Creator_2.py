@@ -64,7 +64,7 @@ spammers = []
 @client.event
 async def on_message(message):
 
-    if not message.content.startswith(",") and not message.channel.id == 572673322891083776:    
+    if not message.content.startswith(",") and not message.channel.id == 572673322891083776 and not message.channel.id == 748122380383027210 and not message.channel.id == 870068988254756894:    
             await new_member(message.author)
 
             user = message.author
@@ -94,7 +94,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    filtered_words = ["fuck", "idiot", "shit"] 
+    filtered_words = []#["fuck", "idiot", "shit", "fuck", "nigg", "fuk", "cunt", "cnut", "bitch", "dick", "d1ck", "pussy,", "asshole", "b1tch", "b!tch", "blowjob", "cock", "c0ck", "f u c k", "shlt", "fů", "cum", "shit" "ass", "fuc", "nigg", "fuk", "cunt", "cnut", "bitch", "dick",  "d1ck", "pussy", "asshole", "b1tch", "b!tch", "blowjob", "cock", "c0ck", "retard", "fag", "faggot"]
     topleveldomain = ["https://", "http://"] #"com", "org", "net"]
 
     #for word in topleveldomain:
@@ -138,9 +138,10 @@ async def on_message(message):
 
     member = message.author
     for word in filtered_words:
-        if word in message.content and not get(member.roles, id=589435378147262464):
+        if word in message.content.lower() and not get(member.roles, id=589435378147262464) and not get(member.roles, id=934116557951475783) and not get(member.roles, id=659740600911921153):
             await message.delete()
             await message.channel.send("This word is banned here" ,delete_after=5.0)
+            break
 
     if message.channel.id == 572541644755435520:
         if not message.content.startswith(",suggest"):
@@ -154,12 +155,80 @@ async def on_message(message):
             
 
     await client.process_commands(message)  
+
+@client.event
+async def on_message_delete(message):
+    channel = client.get_channel(572673322891083776)
+    embed = discord.Embed(description=f"**Message sent by {message.author.mention} deleted in <#{message.channel.id}>** \nContent: {message.content}", color=0xff0000, timestamp=datetime.now())  
+    try:
+        embed.set_author(name=f"{message.author.display_name}", icon_url=message.author.avatar.url) 
+    except:
+        embed.set_author(name=f"{message.author.display_name}")    
+    embed.set_footer(text=f"Author: {message.author.id} | Message ID: {message.id}") 
+    await channel.send(embed=embed)
+
+@client.event
+async def on_message_edit(message_before, message_after):    
+    channel = client.get_channel(572673322891083776)
+    try:
+        if message_before.content == None or message_after.content == None:
+            return
+        embed = discord.Embed(description=f"**Message sent by {message_before.author.mention} edited in <#{message_before.channel.id}>** [Jump to message]({message_before.jump_url})", color=0x0037ff, timestamp=datetime.now())# \n\n**Before:** \n{message_before.content} \n\n**After:** \n{message_after.content}", color=0xff0000, timestamp=datetime.now())
+        embed.add_field(name="Before", value=f"{message_before.content}", inline=False)
+        embed.add_field(name="After", value=f"{message_after.content}", inline=False)  
+        embed.set_author(name=f"{message_before.author.display_name}", icon_url=message_before.author.avatar.url) 
+        embed.set_footer(text=f"Author: {message_before.author.id} | Message ID: {message_before.id}") 
+        await channel.send(embed=embed)
+    except:
+        return    
+
+@client.event
+async def on_member_join(member):
+    member_created = member.created_at.strftime("%m-%d-%Y")
+    date_now = date.today()
+    create_date = member.created_at.date()
+    delta_create = date_now - create_date
+    delta_create_int = int(delta_create.days)
+    weeks = int(delta_create_int/7)
+    months = int(delta_create_int/30.4375)
+    years = int(delta_create_int/365)
+    
+    channel = client.get_channel(572673322891083776)
+    embed = discord.Embed(description=f"{member.mention} {member}", color=0xff0000, timestamp=datetime.now())   
+    embed.add_field(name="Account created at:", value=f"{member_created} MM-DD-YY") 
+    embed.set_author(name=f"Member joined")
+    embed.set_footer(text=f"{member.id}")
+    try:
+        embed.set_thumbnail(url=member.avatar.url)
+    except:
+        pass    
+    
+    await channel.send(embed=embed)
+
+
+@client.event
+async def on_member_leave(member):
+    
+    channel = client.get_channel(572673322891083776)
+    embed = discord.Embed(description=f"{member.mention} {member}", color=0x1eff00, timestamp=datetime.now())   
+    embed.set_author(name=f"Member left")
+    embed.set_footer(text=f"{member.id}")
+    try:
+        embed.set_thumbnail(url=member.avatar.url)
+    except:
+        pass    
+    
+    await channel.send(embed=embed)
     
 
 @client.command()
 async def testo(ctx):
     await ctx.send(spammers)
     await ctx.send(collections.Counter(spammers))  
+
+
+ 
+
 
 async def get_messages():
     with open("userLevels.json", "r") as f:
@@ -250,4 +319,4 @@ if __name__ == '__main__':
     for extension in initial_extensions:
         client.load_extension(extension)    
 
-client.run("TOKEN")    
+client.run(TOKEN)    
