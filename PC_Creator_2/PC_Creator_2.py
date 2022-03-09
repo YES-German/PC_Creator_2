@@ -78,6 +78,21 @@ async def on_message(message):
             with open("userLevels.json", "w") as f:
                 json.dump(users,f)  
 
+
+            await new_coin_member(message.author)  
+
+            user = message.author
+
+            users_coins = await get_coins()  
+
+            coins = int(1)
+
+            users_coins[str(user.id)] += coins
+
+            with open("usercoins.json", "w") as f:
+                json.dump(users_coins,f)
+
+
             with open ("counter-file.txt", "r") as cf:
                 data = cf.readlines()
                 cf.close
@@ -250,6 +265,26 @@ async def new_member(user):
     return True         
 
 
+
+async def get_coins():
+    with open("usercoins.json", "r") as f:
+        users_coins = json.load(f)
+    return users_coins
+
+async def new_coin_member(user):
+
+    users_coins = await get_coins()
+
+    if str(user.id) in users_coins:
+        return False
+    else:
+        users_coins[str(user.id)] = {}
+        users_coins[str(user.id)] = 0
+
+    with open("usercoins.json", "w") as f:
+        json.dump(users_coins,f)
+    return True
+
 #async def get_restriction():
 #    with open("channel_restrictions.json", "r") as f:
 #        restriction = json.load(f)
@@ -319,4 +354,4 @@ if __name__ == '__main__':
     for extension in initial_extensions:
         client.load_extension(extension)    
 
-client.run(TOKEN)    
+client.run(Dont steel my token)    

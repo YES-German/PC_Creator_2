@@ -11,7 +11,7 @@ class credit(commands.Cog):
     async def credit(self, ctx):
         embed = discord.Embed(title="Credits", color=13565696)
         embed.add_field(name="Bot Owner/Developer", value="<@695229647021015040>", inline=False)
-        embed.add_field(name="Bot Developer", value="<@713696771188195368>", inline=False)
+        embed.add_field(name="Bot Developers", value="<@713696771188195368>, \n<@443769343138856961>", inline=False)
         embed.add_field(name=",scores sheets", value="<@695229647021015040>, \n<@713696771188195368>")
 
         await ctx.send(embed=embed)
@@ -21,7 +21,7 @@ class credit(commands.Cog):
     async def credit_slash(self, ctx):
         embed = discord.Embed(title="Credits", color=13565696)
         embed.add_field(name="Bot Owner/Developer", value="<@695229647021015040>", inline=False)
-        embed.add_field(name="Bot Developer", value="<@713696771188195368>", inline=False)
+        embed.add_field(name="Bot Developer", value="<@713696771188195368>, \n<@443769343138856961>", inline=False)
         embed.add_field(name=",scores sheets", value="<@695229647021015040>, \n<@713696771188195368>")
 
         await ctx.respond(embed=embed)    

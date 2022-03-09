@@ -75,72 +75,72 @@ class levelroles(commands.Cog):
                 level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} {dont} {have} any level roles yet \n{your} next level role is **Level 1** and here's {your2} progress:", color=13565696)
                 message_field = int(1000)
                 date_field = int(60)
-                if messages_amt >= message_field and not get(member.roles, id=934114613639938168):
+                if messages_amt >= message_field and not get(member.roles, name="Level 1"):
                     emoji = ":white_check_mark:"
                 else:
                     emoji = ":x:"
-                if delta_int >= date_field and not get(member.roles, id=934116232628674562):
+                if delta_int >= date_field and not get(member.roles, name="Level 1"):
                     date_emoji = ":white_check_mark:"
                 else:
                     date_emoji = ":x:"    
                     
-            if get(member.roles, id=934114613639938168): # Check if this role is in the member's roles
+            if get(member.roles, name="Level 1"): # Check if this role is in the member's roles
                 level = discord.Embed(title=f"{member.display_name}'s Level", description=f"{you} already {have} the **Level 1** role \n{your} next level role is **Level 2** and here's {your2} progress:", colour=13565696)
                 message_field = int(2000)
                 date_field = int(90)
-                if messages_amt >= message_field and not get(member.roles, id=934116232628674562):
+                if messages_amt >= message_field and not get(member.roles, name="Level 2"):
                     emoji = ":white_check_mark:"
                 else:
                     emoji = ":x:" 
-                if delta_int >= date_field and not get(member.roles, id=934116232628674562):
+                if delta_int >= date_field and not get(member.roles, name="Level 2"):
                     date_emoji = ":white_check_mark:"
                 else:
                    date_emoji = ":x:"    
-                if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934116232628674562):
+                if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, name="Level 2"):
                     reached_level_2 = True    
-                if get(member.roles, id=934116232628674562):
+                if get(member.roles, name="Level 2"):
                     level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} already {have} the **Level 1** and **Level 2** roles \n{your} next level role is **Level 3** and here's {your2} progress:", colour=13565696)
                     message_field = int(4000)
                     date_field = int(120)
-                    if messages_amt >= message_field and not get(member.roles, id=934116557951475783):
+                    if messages_amt >= message_field and not get(member.roles, name="Level 3"):
                         emoji = ":white_check_mark:"
                     else:
                         emoji = ":x:"
-                    if delta_int >= date_field and not get(member.roles, id=934116557951475783):
+                    if delta_int >= date_field and not get(member.roles, name="Level 3"):
                         date_emoji = ":white_check_mark:"
                     else:
                         date_emoji = ":x:"    
-                    if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934116557951475783):
+                    if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, name="Level 3"):
                         reached_level_3 = True
-                    if get(member.roles, id=934116557951475783):
+                    if get(member.roles, name="Level 3"):
                         level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} already {have} the **Level 1**, **Level 2** and **Level 3** roles \n{your} next level role is **Level 4** and here's {your2} progress:", colour=13565696)
                         message_field = int(8000)
                         date_field = int(150)
-                        if messages_amt >= message_field and not get(member.roles, id=934116875091189780):
+                        if messages_amt >= message_field and not get(member.roles, name="Level 4"):
                             emoji = ":white_check_mark:"
                         else:
                             emoji = ":x:"
-                        if delta_int >= date_field and not get(member.roles, id=934116875091189780):
+                        if delta_int >= date_field and not get(member.roles, name="Level 4"):
                             date_emoji = ":white_check_mark:"
                         else:
                             date_emoji = ":x:"    
-                        if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934116875091189780):
+                        if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, name="Level 4"):
                             reached_level_4 = True
-                        if get(member.roles, id=934116875091189780):
+                        if get(member.roles, name="Level 4"):
                             level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} already {have} the **Level 1**, **Level 2**, **Level 3** and **Level 4** roles \n{your} next level role is **Level 5** and here's {your2} progress:", colour=13565696)    
                             message_field = int(16000)
                             date_field = int(180)
-                            if messages_amt >= message_field and not get(member.roles, id=934117031668744193):
+                            if messages_amt >= message_field and not get(member.roles, name="Level 5"):
                                 emoji = ":white_check_mark:"
                             else:
                                 emoji = ":x:"
-                            if delta_int >= date_field and not get(member.roles, id=934117031668744193):
+                            if delta_int >= date_field and not get(member.roles, name="Level 5"):
                                 date_emoji = ":white_check_mark:"
                             else:
                                date_emoji = ":x:"    
-                            if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934117031668744193):
+                            if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, name="Level 5"):
                                 reached_level_5 = True    
-                            if get(member.roles, id=934117031668744193):
+                            if get(member.roles, name="Level 5"):
                                 level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} already {have} **all** of the level **roles**. Here's {your2} progress:", colour=13565696)  
                                 emoji = ":gem:"
                                 date_emoji = ":gem:"
@@ -148,15 +148,15 @@ class levelroles(commands.Cog):
                 level = discord.Embed(title=f"{member.display_name}'s Levels", description=f"{you} {dont} {have} any level roles yet \n{your} next level role is **Level 1** and here's {your2} progress:", color=13565696)
                 message_field = int(1000)
                 date_field = int(60)
-                if messages_amt >= message_field and not get(member.roles, id=934114613639938168):
+                if messages_amt >= message_field and not get(member.roles, name="Level 1"):
                     emoji = ":white_check_mark:"
                 else:
                     emoji = ":x:"
-                if delta_int >= date_field and not get(member.roles, id=934116232628674562):
+                if delta_int >= date_field and not get(member.roles, name="Level 1"):
                     date_emoji = ":white_check_mark:"
                 else:
                     date_emoji = ":x:"    
-                if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, id=934116232628674562):
+                if messages_amt >= message_field and delta_int >= date_field and not get(member.roles, name="Level 1"):
                     reached_level_1 = True    
             
 
@@ -173,27 +173,27 @@ class levelroles(commands.Cog):
         await send(embed=embed)
 
         if reached_level_2 == True:
-            role = ctx.guild.get_role(934116232628674562)
+            role = discord.utils.get(ctx.guild.roles, name="Level 2")
             await ctx.send(f"{you} received the **Level 2** role")
             await member.add_roles(role)
 
         if reached_level_3 == True:
-            role = ctx.guild.get_role(934116557951475783)
+            role = discord.utils.get(ctx.guild.roles, name="Level 3")
             await ctx.send(f"{you} received the **Level 3** role")
             await member.add_roles(role)  
 
         if reached_level_4 == True:
-            role = ctx.guild.get_role(934116875091189780)  
+            role = discord.utils.get(ctx.guild.roles, name="Level 4")  
             await ctx.send(f"{you} received the **Level 4** role")
             await member.add_roles(role)   
 
         if reached_level_5 == True:
-            role = ctx.guild.get_role(934117031668744193)  
+            role = discord.utils.get(ctx.guild.roles, name="Level 5")  
             await ctx.send(f"{you} received the **Level 5** role")
             await member.add_roles(role) 
 
         if reached_level_1 == True:
-            role = ctx.guild.get_role(934114613639938168)  
+            role = discord.utils.get(ctx.guild.roles, name="Level 1")  
             await ctx.send(f"{you} received the **Level 1** role")
             await member.add_roles(role)          
 
